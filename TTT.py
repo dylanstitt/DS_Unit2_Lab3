@@ -31,19 +31,18 @@ class TicTacToe:
 
         if sum([self.__board[i].count('@ ') for i in range(3)]) == 0:
             return 'Draw'
-        elif (self.__board[0][0] == self.__board[1][1] == self.__board[2][2]) or self.__board[0][2] == self.__board[1][1] == self.__board[2][0]:
+        elif (self.__board[0][0] == self.__board[1][1] == self.__board[2][2] == token+' ') or (self.__board[0][2] == self.__board[1][1] == self.__board[2][0] == token+' '):
+            # Diagonals
             return token
         elif 3 in hCounts or 3 in vCounts:
+            # Horizontal or Vertical
             return token
         return False
 
 
     def placeToken(self, x, y):
         """Checks the make sure that the current space is empty, places the player token if it is, and then checks for a winner, returns it, and changes the token"""
-        if self.__board[y][self.__translations[x]] == '@ ':
-            self.__board[y][self.__translations[x]] = self.__turn+' '
-        else:
-            return False
+        self.__board[y][self.__translations[x]] = self.__turn+' '
 
         winner = self.isWinner(self.__turn)
         self.__turn = 'X' if self.__turn == 'O' else 'O'
@@ -51,5 +50,10 @@ class TicTacToe:
 
 
     def isWinner(self, token):
-        """Calls the self.__checkWin() function to determine if the token is winner and returns it for the self.placeToken() to use"""
+        """Calls the self.__checkWin() function to determine if the token is winner and returns it for the self.placeToken() method and game loop to use"""
         return self.__checkWin(token)
+
+
+    def getCurrentPlayer(self):
+        """Returns the current player of the game to know when it is the computer or the player"""
+        return self.__turn
