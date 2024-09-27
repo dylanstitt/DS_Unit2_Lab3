@@ -87,7 +87,6 @@ def main():
             again = input('\n\nDo you want to play again? (y/n): ').lower()
 
             if playAgain(again):
-                os.system('cls')
                 player = validateInput(input('Enter X or O: ').lower(), 'token')
                 game = TicTacToe()
             else:
