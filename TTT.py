@@ -22,7 +22,7 @@ class TicTacToe:
 
 
     def __checkWin(self, token):
-        """Checks the horizontal, vertical, and diagonal spaces for the same token 3 in a row and return the token that wins, 'Draw' if it is a tie, and False if neither"""
+        """Checks the horizontal, vertical, and diagonal spaces for the same token 3 in a row and return the token that wins, 'Draw' if it is a tie, and 'False' if neither"""
         horizontal = [[self.__board[i][j] for j in range(3)] for i in range(3)]
         vertical = [[self.__board[j][i] for j in range(3)] for i in range(3)]
 
