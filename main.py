@@ -10,6 +10,9 @@ def validateInput(inp, mode):
 
     # This validates the user input for selecting a space to put their token
     if mode == 'coord':
+        while len(inp) != 2:
+            inp = input('Enter valid coordinates: ')
+
         letter, number = inp[0], inp[1]
         while letter not in ['a', 'b', 'c']:
             letter = input('Only enter letters A-C. Enter your letter again: ').lower()
@@ -61,7 +64,6 @@ def main():
     os.system('cls')
     player = validateInput(input('Enter X or O: ').lower(), 'token')
     playing = True
-    usedSpaces = []
 
     game = TicTacToe()
     while playing:
@@ -71,17 +73,15 @@ def main():
         currentPlayer = game.getCurrentPlayer()
         if currentPlayer == player:
             x, y = validateInput(input('Enter the space you would like to place your token at: '), 'coord')
-            while (x, y) in usedSpaces:
+            while (x, y) in game.getUsedSpaces():
                 x, y = validateInput(input('Enter an empty space. Try again: '), 'coord')
 
         else:
             x, y, = random.choice(['a', 'b', 'c']), random.randint(0, 2)
-            while (x, y) in usedSpaces:
+            while (x, y) in game.getUsedSpaces():
                 x, y, = random.choice(['a', 'b', 'c']), random.randint(0, 2)
 
-        usedSpaces.append((x, y))
         winner = game.placeToken(x, y)
-
         if winner != False:
             displayWinner(winner, game)
             again = input('\n\nDo you want to play again? (y/n): ').lower()
@@ -89,9 +89,6 @@ def main():
             if playAgain(again):
                 os.system('cls')
                 player = validateInput(input('Enter X or O: ').lower(), 'token')
-                playing = True
-                usedSpaces = []
-
                 game = TicTacToe()
             else:
                 exit()

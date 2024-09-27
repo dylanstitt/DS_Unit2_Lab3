@@ -8,7 +8,7 @@ class TicTacToe:
         self.__board = [['@ ' for i in range(3)] for i in range(3)]
         self.__turn = choice(['X', 'O'])
         self.__translations = {'a': 0, 'b': 1, 'c': 2}
-
+        self.__usedSpaces = []
 
     def __str__(self):
         """Displays the board nicely"""
@@ -19,7 +19,6 @@ class TicTacToe:
                 str += self.__board[i][j]
             str += '\n'
         return str
-
 
     def __checkWin(self, token):
         """Checks the horizontal, vertical, and diagonal spaces for the same token 3 in a row and return the token that wins, 'Draw' if it is a tie, and 'False' if neither"""
@@ -39,21 +38,22 @@ class TicTacToe:
             return token
         return False
 
-
     def placeToken(self, x, y):
         """Checks the make sure that the current space is empty, places the player token if it is, and then checks for a winner, returns it, and changes the token"""
         self.__board[y][self.__translations[x]] = self.__turn+' '
+        self.__usedSpaces.append((x, y))
 
         winner = self.isWinner(self.__turn)
         self.__turn = 'X' if self.__turn == 'O' else 'O'
         return winner
 
-
     def isWinner(self, token):
         """Calls the self.__checkWin() function to determine if the token is winner and returns it for the self.placeToken() method and game loop to use"""
         return self.__checkWin(token)
 
-
     def getCurrentPlayer(self):
         """Returns the current player of the game to know when it is the computer or the player"""
         return self.__turn
+
+    def getUsedSpaces(self):
+        return self.__usedSpaces
