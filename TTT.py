@@ -56,4 +56,5 @@ class TicTacToe:
         return self.__turn
 
     def getUsedSpaces(self):
+        """Returns the spaces on the board that are used"""
         return self.__usedSpaces
